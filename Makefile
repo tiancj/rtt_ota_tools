@@ -2,6 +2,7 @@ CFLAGS = -Wall -O2
 
 ota_tools: ota_tools.o quicklz.o tiny_aes.o
 	gcc $(CFLAGS) $^ -o $@
+	-pyinstaller -D beken_packager.spec
 
 ota_tools.o: ota_tools.c quicklz.h tiny_aes.h
 	gcc $(CFLAGS) -c $< 
