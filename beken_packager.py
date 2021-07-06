@@ -1,50 +1,19 @@
-# uncompyle6 version 3.7.4
-# Python bytecode 3.5 (3350)
-# Decompiled from: Python 3.8.5 (default, Jul 28 2020, 12:59:40) 
-# [GCC 9.3.0]
-# Embedded file name: /mnt/hgfs/work/rt-thread/com_svn_git/beken/beken_bl/tools/beken_packager.py
+#!/usr/bin/env python3
 # 
-# install python 3.5.1
-# pip3 install uncompyle6
-# export PATH with python 3.5.1
-# objcopy --dump-section pydata=pydata.dump beken_packager.elf
-# uncompyle6 pydata.dump_extracted/beken_packager.pyc > beken_packager.py
-# 
-# reference:
-# https://github.com/extremecoders-re/pyinstxtractor/wiki/Extracting-Linux-ELF-binaries
-# https://github.com/extremecoders-re/pyinstxtractor/wiki/Frequently-Asked-Questions
-# https://github.com/rocky/python-uncompyle6/
-# https://snapcraft.io/pyinstxtractor
-# PyInstaller Extractor is used to extract the contents of a PyInstaller file.
-# PyInstaller Extractor is a Python script to extract the contents of a PyInstaller generated Windows executable file. The contents of the pyz file (usually pyc files) present inside the executable are also extracted.
-# The header of the pyc files are automatically fixed so that a Python bytecode decompiler will recognize it. The script can run on both Python 2.x and 3.x. Pyinstaller versions 2.0, 2.1, 3.0, 3.1, 3.2, 3.3, 3.4, 3.5 and 3.6 are tested & supported. Probably will work with other versions too.
-# This project was originally hosted on SourceForge (https://sourceforge.net/projects/pyinstallerextractor/).
-# How to install
-# $ sudo snap install pyinstxtractor
-# How to use
-# The script can be run by passing the name of the exe as an argument.
-# $ pyinstxtractor filename
-# It is recommended to run the script in the same version of Python which was used to generate the executable. This is to prevent unmarshalling errors(if any) while extracting the PYZ archive.
-# Example
-# $ pyinstxtractor test.exe
-# [+] Processing dist\test.exe
-# [+] Pyinstaller version: 2.1+
-# [+] Python version: 36
-# [+] Length of package: 5612452 bytes
-# [+] Found 59 files in CArchive
-# [+] Beginning extraction...please standby
-# [+] Possible entry point: pyiboot01_bootstrap.pyc
-# [+] Possible entry point: test.pyc
-# [+] Found 133 files in PYZ archive
-# [+] Successfully extracted pyinstaller archive: dist\test.exe
-# You can now use a python decompiler on the pyc files within the extracted directory
-# After extracting the pyc's you can use a Python decompiler like Uncompyle6 (https://github.com/rocky/python-uncompyle6/) or pycdc (https://snapcraft.io/pycdc).
-# Extracting Linux ELF binaries
-# Pyinstxtractor can also extract Linux ELF binaries. Please see the Wiki (https://github.com/extremecoders-re/pyinstxtractor/wiki/Extracting-Linux-ELF-binaries) for more information.
-# For other questions, please see the FAQ (https://github.com/extremecoders-re/pyinstxtractor/wiki/Frequently-Asked-Questions)
-# Source: https://github.com/extremecoders-re/pyinstxtractor
 
-import sys, platform, traceback, os, termios, stat, time, datetime, subprocess, shlex, shutil, json
+import sys
+import platform
+import traceback
+import os
+import termios
+import stat
+import time
+import datetime
+import subprocess
+import shlex
+import shutil
+import json
+
 img_name = 'all.bin'
 
 def load_config_file(file):
@@ -350,7 +319,12 @@ if __name__ == '__main__':
             img.write(b'\xff' * firmware_size)
         for index in range(len(section)):
             if section[index]['flash_name'] == 'beken_onchip_crc':
-                pack_firmware(section[index]['firmware'], section[index]['partition'] + '_firmware.bin', section[index]['start_addr'], int(section[index]['size']), section[index]['version'], section[index]['partition'])
+                pack_firmware(section[index]['firmware'], 
+                              section[index]['partition'] + '_firmware.bin', 
+                              section[index]['start_addr'], 
+                              int(section[index]['size']), 
+                              section[index]['version'], 
+                              section[index]['partition'])
                 remove_file(section[index]['firmware'])
 
         with open(img_name, 'rb+') as (img):
